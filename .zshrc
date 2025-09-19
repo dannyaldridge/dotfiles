@@ -43,7 +43,7 @@ ZSH_THEME="robbyrussell"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
@@ -62,7 +62,7 @@ ZSH_THEME="robbyrussell"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="dd/mm/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -105,3 +105,17 @@ source $ZSH/oh-my-zsh.sh
 # Initialize zsh completions (added by deno install script)
 autoload -Uz compinit
 compinit
+
+source <(fzf --zsh)
+alias fzf="fzf --preview='bat --color=always {}'"
+
+fzd() {
+    local dir
+    dir=$(find . -type d -not -path '*/.*' 2>/dev/null | fzf --preview 'ls -la {}' --preview-window=right:50%:wrap) && cd "$dir"
+}
+
+eval "$(zoxide init zsh)"
+
+alias ls="eza --icons"
+alias lg="lazygit"
+alias cursor="open -a 'Cursor' ."
